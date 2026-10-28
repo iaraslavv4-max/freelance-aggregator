@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Freelance Aggregator
 
-## Getting Started
+Небольшое веб-приложение для поиска свежих заказов с FL.ru. Оно собирает публичную RSS-ленту в удобную ленту карточек и помогает быстрее отобрать подходящие проекты.
 
-First, run the development server:
+## Возможности
+
+- Загрузка заказов из RSS-ленты FL.ru на сервере.
+- Поиск по названию и описанию.
+- Фильтр по категориям и по избранному.
+- Сортировка от новых заказов к старым и наоборот.
+- Сохранение избранного в браузере.
+- Копирование ссылки на заказ и переход к исходной публикации.
+- Ручное обновление ленты.
+- Светлая и тёмная темы, адаптивная раскладка.
+- Обработка недоступности RSS-ленты с сообщением об ошибке.
+
+## Стек
+
+- Next.js 16 (App Router, Server Components)
+- React 19 и TypeScript
+- Tailwind CSS 4
+- `rss-parser` для обработки RSS/XML
+- `next-themes` для переключения темы
+
+## Запуск локально
+
+Требуется Node.js 20.9 или новее.
 
 ```bash
+git clone https://github.com/iaraslavv4-max/freelance-aggregator.git
+cd freelance-aggregator
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Для production-сборки:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm run start
+```
 
-## Learn More
+## Как устроено
 
-To learn more about Next.js, take a look at the following resources:
+- `app/` содержит страницу, корневой layout и глобальные стили.
+- `components/Feed.tsx` отвечает за поиск, фильтры, сортировку и отображение заказов.
+- `components/ThemeToggle.tsx` переключает тему.
+- `lib/jobs.ts` загружает и нормализует RSS-ленту на сервере.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ограничения
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Доступность и полнота заказов зависят от публичной RSS-ленты FL.ru.
+- Лента загружается при открытии страницы и по ручному запросу; автоматического обновления в реальном времени нет.
+- Избранное хранится в `localStorage` этого браузера и не синхронизируется между устройствами.
+- Категории доступны только если они присутствуют в данных RSS.
 
-## Deploy on Vercel
+## Идеи для развития
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Уведомления о новых заказах по выбранным словам или категориям.
+- Тесты для нормализации данных и логики фильтрации.
+- Поддержка дополнительных источников заказов с учётом их правил и доступности.
